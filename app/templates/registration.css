@@ -1,0 +1,38 @@
+#field{
+	border: 2px solid  #117864  ;
+	border-radius: 3px;
+}
+
+.header {
+	color:   #2980b9 ;
+}
+
+.container{
+	margin-top: 5%;
+	padding-right: 10%;
+	padding-left: 10%;
+	margin-top: 2%;
+}
+#body{
+	background-color:  #cacfd2;
+
+}
+
+.table-1{
+	padding-top: 10%
+	padding-left 10%
+	padding-right: 10%;
+}
+
+.table-c{
+	background-color:  #cbcdce;
+}
+
+.navbar .nav li {
+
+  display: inline %;
+}
+
+.index{
+	padding-top:  30%;
+}
