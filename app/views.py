@@ -14,3 +14,9 @@ def login():
 @app.route('/signup')
 def create():
 	return render_template('registration_form.html')
+
+
+
+@app.route('/recipes')
+def list():
+    return render_template('recipes_index.html')
