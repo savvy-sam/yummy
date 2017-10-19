@@ -1,5 +1,10 @@
 # yummy
 
+
+<img src= 'https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master'>
+<img src= 'https://opensource.org/licenses/MIT' >
+
+
 <strong>Introduction</strong>
 <p>
 Yummy is an app where users manage recipes. 
