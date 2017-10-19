@@ -63,23 +63,15 @@ Clone this repository
     
     
  <strong>Uses</strong>
- 1. Flask
- 2. HTML
- 3. Bootstrap
  
+ <ol>
+    <li>Flask</li>
+    <li>HTML</li>
+    <li>Bootstrap</li>
+ 
+ </ol>
  <strong>Author</strong>
  
  Samson Chege- Andela Fellowship Applicant
-This is a roject for The Andele Bootcamp Challange
-
-It is a revision to tune the repository to the right standards
 
 
-
-<strong>Uses</strong>
-1. HTML
-2.CSS
-3. Bootstrap
-
-Author
-Samson Chege-An Andela Fellowship Applicant
