@@ -1,5 +1,9 @@
 # yummy
 
+
+https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master
+
+
 <strong>Introduction</strong>
 <p>
 Yummy is an app where users manage recipes. 
