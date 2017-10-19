@@ -9,18 +9,18 @@ It allows users to create,edit, view and delete recipes
 <p>
 To run the app on your local machine:
 </p>
-clone this repository
+Clone this repository
 <p><code> git clone</code></p>
 
-<p>assuming you have python running on your computer,install pipenv</p>
+<p>Assuming you have python running on your computer,install pipenv</p>
 
 <p><code> pip install pipenv</code><p>
     
  <p>Install virtualenv</p>
  
- <p>pipenv install virtualenv</p>
+ <p><code>pipenv install virtualenv</code></p>
  
- Create a virtual environment
+ <p>Create a virtual environment</p>
  <p><code>cd your_project_folder</code></p>
  <p><code>virtualenv your_virtual_env</code></p>
   
