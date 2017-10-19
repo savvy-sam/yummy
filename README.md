@@ -1,5 +1,12 @@
 # yummy
 
+<img src='https://img.shields.io/coveralls/jekyll/jekyll/master.svg'>
+
+<img src= 'https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master'>
+<img src= 'https://opensource.org/licenses/MIT' >
+< img src='https://img.shields.io/codeclimate/github/kabisaict/flow.svg'>
+
+
 <strong>Introduction</strong>
 <p>
 Yummy is an app where users manage recipes. 
@@ -12,8 +19,6 @@ To run the app on your local machine:
 Clone this repository
 <p><code> git clone</code></p>
 
-<img src= 'https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master'>
-<img src= 'https://opensource.org/licenses/MIT' >
 
 
 <strong>Introduction</strong>
