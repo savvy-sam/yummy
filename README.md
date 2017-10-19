@@ -1,7 +1,7 @@
 # yummy
 
 
-https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master
+<img src= 'https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master'>
 
 
 <strong>Introduction</strong>
