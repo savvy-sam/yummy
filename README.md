@@ -1,7 +1,6 @@
 #Yummy
 <a href='https://travis-ci.org/savvy-sam/yummy'>
 <img src="https://camo.githubusercontent.com/7692d916491cb6c816b92291478da12a763d223c/68747470733a2f2f7472617669732d63692e6f72672f6b6167756e612f59756d6d792d526563697065732e7376673f6272616e63683d646576656c6f70" alt="Build Status" data-canonical-src="https://travis-ci.org/savvy-sam/yummy.svg?branch=develop" style="max-width:100%;"><<a/>
-[![Build Status](bhttps://travis-ci.org/savvy-sam/yummy.svg?branch=master)](https://travis-ci.org/savvy-sam/yummy.svg?branch=mas
 <img src='https://img.shields.io/coveralls/jekyll/jekyll/master.svg'>
 <img src= 'https://img.shields.io/codeclimate/github/kabisaict/flow.svg'>
 <img src= 'https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master'>
