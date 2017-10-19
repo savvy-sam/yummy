@@ -1,5 +1,16 @@
 # yummy
 
+<strong>Introduction</strong>
+<p>
+Yummy is an app where users manage recipes. 
+It allows users to create,edit, view and delete recipes
+</p>
+<strong>Installation</strong>
+<p>
+To run the app on your local machine:
+</p>
+Clone this repository
+<p><code> git clone</code></p>
 
 <img src= 'https://travis-ci.org/savvy-sam/Yummy-Recipes.svg?branch=master'>
 <img src= 'https://opensource.org/licenses/MIT' >
@@ -78,5 +89,4 @@ Clone this repository
  <strong>Author</strong>
  
  Samson Chege- Andela Fellowship Applicant
-
 
