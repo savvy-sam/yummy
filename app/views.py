@@ -47,6 +47,22 @@ def register():
     return render_template('register.html', form=form)
 
 
+@app.route('/user/update', methods=['GET', 'POST'])
+def update_user():
+    form=RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user=User(form.name.data, form.email.data, form.password.data, form.confirm.data)
+        #form.populate_obj(user)
+        #user.save()
+        user.add_user(user.name, user.email)
+        return redirect('/')
+        #return user.name
+        
+    return render_template('register.html', form=form)
+
+
+
+
 
 @app.route('/recipes')
 def list():
