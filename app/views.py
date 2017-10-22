@@ -47,10 +47,12 @@ def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
 #Create an object user of the User class
+        global user
         user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
 #Append the object user to the USERS_INDEX list
         USERS_INDEX.append(user)
-        return redirect('/')
+
+        return redirect('/create/recipe')
         #re-render the register form if the the post request is not succesful
     return render_template('register.html', form=form)
 
@@ -63,6 +65,7 @@ def update_user():
     if request.method == 'POST' and form.validate():
         global user
         user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
+        flash("You have succesfully signed up, create a recipe")
         return redirect('/')
 #re-render form if the POST request is not succesful
     return render_template('register.html', form=form)
@@ -82,7 +85,7 @@ class RecipeForm(Form):
     title = StringField('TITLE', [validators.length(max=20)])
     content = TextAreaField("CONTENT", [validators.length(max=500)])
 
-@app.route('/create/recipe', methodsss=['GET', 'POST'])
+@app.route('/create/recipe', methods=['GET', 'POST'])
 def create_recipe():
     """This function creates an instance of the RecipeForm class
     It reads  the form delivered by requests
@@ -90,6 +93,7 @@ def create_recipe():
     form = RecipeForm(request.form)
     if request.method == 'POST' and form.validate():
 # Create an object recipe of the Recipe class
+        global recipe
         recipe = Recipe(form.title.data, form.content.data)
 # Add recipe object to the list RECIPE_INDEX list
         RECIPES_INDEX.append(recipe)
