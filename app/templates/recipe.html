@@ -1,26 +1,52 @@
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+
+{% block head %}
+
+<head>
+	<title>User Login Page </title>
+
+	<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
+</head>
+
+{% endblock%}
+
+
 {% block body %}
 
+<h2 class='text-center'>CREATE YOUR RECIPE</h2>
 
+<div class="container" id="body">
 {% from "includes/_form_helpers.html" import render_field %}
 
 <form method='POST' action ="">
 
 	<div class='form-group'>
 
-		{{render_field(form.title, class="form-control")}}
+		{{render_field(form.title, class="form-control field")}}
 		
 	</div>
 
 	<div class='form-group'>
 
-		{{render_field(form.content, class="form-control")}}
+		{{render_field(form.content, class="form-control field")}}
 		
 	</div>
 
 	<input type = "Submit" class= "btn btn-primary"  value="Submit" >
 
 
-	<form>
+	</form>
+
+</div>
 
 
 {% endblock %}
