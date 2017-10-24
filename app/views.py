@@ -5,6 +5,7 @@ from flask import render_template
 from flask import request
 from flask import redirect
 from flask import flash
+from flask import session
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from app import app
 from app.model import User
@@ -17,21 +18,48 @@ RECIPES_INDEX = []
 user = User("aaaa", "bbbb", "1111", "1111")
 recipe=Recipe("aaaa", "bbbb")
 
-
 @app.route('/')
 def index():
     """This function will return the index.html when the route is triggered"""
     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    """Tis function will return thr user login form when the route is triggered"""
-    return render_template('user_login.html')
-
 @app.route('/signup')
 def create():
     """This function will render the registration form when the route is triggered"""
     return render_template('registration_form.html')
+
+
+class LoginForm(Form):
+    """This class will read data from the login form"""
+    email = StringField('ENTER EMAIL', [validators.DataRequired(message='You need to imput your email')])
+    password = PasswordField('ENTER PASSWORD', [validators.DataRequired(message='You need to imput a password')])
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm(request.form)
+    """This method logs in a user by saving user.id in session"""
+    if user.logged_in():
+        """checks whether the user is already logged in
+        If the user is logged in, it redirects and renders a flash message
+        """
+        redirect('/create/recipe')
+        flask.flash('You are already logged in')
+    else:
+        if  request.method == 'POST' and form.validate():
+            """reads data from the login form"""
+            if form.email.data == user.email and form.password.data == user.password:
+                """checks whether the provided data matches user details"""
+                user.login_user()
+                """login_user() is defined in the user class"""
+                redirect('/create/recipe')
+        return render_template('user_login.html', form=form)
+
+
+class LoginForm(Form):
+    """This class will read data from the login form"""
+    email = StringField('ENTER EMAIL', [validators.DataRequired(message='You need to imput your email')])
+    password = PasswordField('ENTER PASSWORD', [validators.DataRequired(message='You need to imput a password')])
 
 class RegisterForm(Form):
     """This will define a class that reads data from the register form
