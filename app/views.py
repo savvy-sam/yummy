@@ -13,6 +13,9 @@ from app.model import Recipe
 # define empty lists where the users and recipes will be saved after creation
 USERS_INDEX = []
 RECIPES_INDEX = []
+# declare global variables user and recipe so that they can be used across all methods
+user = User("aaaa", "bbbb", "1111", "1111")
+recipe=Recipe("aaaa", "bbbb")
 
 
 @app.route('/')
@@ -78,7 +81,7 @@ def listing():
 @app.route('/user/show')
 def show_user():
     """This function return a tuple showing the user email and name"""
-    return (user.name, user.email)
+    return (user.email, user.email)
 
 class RecipeForm(Form):
     """Defines a class RecipeForm that will read data from a html form"""
