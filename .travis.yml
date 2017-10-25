@@ -2,7 +2,7 @@ language: python
 python:
    "2.7.13"
 install:
-    "pip freeze > requirements.txt"
+     pip install -r requirements.txt
 script:
     - "pytest app_tests.py"
 after_success: coveralls
