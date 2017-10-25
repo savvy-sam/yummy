@@ -23,21 +23,21 @@ class TestApp(unittest.TestCase):
 
     def test_login(self):
         """Test whether this route renders the a page succesfully"""
-    	indx = self.app.get('/login')
+        indx = self.app.get('/login')
 #Test whether  the route returns HTTP code 200
-    	self.assertEqual(indx.status_code, 200)
+        self.assertEqual(indx.status_code, 200)
 
     def  test_signup(self):
         """Test whether this route renders the a page succesfully"""
-    	indx = self.app.get('/signup')
+        indx = self.app.get('/signup')
 #Test whether  the route returns HTTP code 200
-    	self.assertEqual(indx.status_code, 200)
+        self.assertEqual(indx.status_code, 200)
 
     def test_recipes(self):
         """Test whether this route renders the a page succesfully"""
-    	indx = self.app.get('/recipes')
+        indx = self.app.get('/recipes')
 #Test whether  the route returns HTTP code 200
-    	self.assertEqual(indx.status_code, 200)
+        self.assertEqual(indx.status_code, 200)
 
     def test_class_creation(self):
         """This method tests whether an instance of User class can be created succesfully"""
