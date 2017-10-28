@@ -23,12 +23,6 @@ def index():
     """This function will return the index.html when the route is triggered"""
     return render_template('index.html')
 
-@app.route('/signup')
-def create():
-    """This function will render the registration form when the route is triggered"""
-    return render_template('registration_form.html')
-
-
 class LoginForm(Form):
     """This class will read data from the login form"""
     email = StringField('ENTER EMAIL', [validators.DataRequired(message='You need to imput your email')])
@@ -112,7 +106,7 @@ class RecipeForm(Form):
     title = StringField('TITLE', [validators.length(max=20)])
     content = TextAreaField("CONTENT", [validators.length(max=500)])
 
-@app.route('/create/recipe', methods=['GET', 'POST'])
+@app.route('/recipe/create', methods=['GET', 'POST'])
 def create_recipe():
     """This function creates an instance of the RecipeForm class
     It reads  the form delivered by requests
@@ -126,7 +120,7 @@ def create_recipe():
 # RECIPE_INDEX is defined as global so that it can be used in different routes
         global RECIPE_INDEX
         RECIPES_INDEX.append(recipe)
-        return redirect('/recipe/show')
+        return redirect('/recipes/index')
     return render_template('recipe.html', form=form)
 
 @app.route('/recipe/update', methods=['GET', 'POST'])
@@ -158,7 +152,7 @@ def all_recipes():
             return render_template('recipes_index.html', recipes=RECIPES_INDEX, user=user)
 #flashes a mesage when the recipes_index list is empty
     flash("no recipes to display yet")
-    return redirect('/create/recipe')
+    return redirect('/recipe/create')
 
 # add a route to show a recipe
 @app.route('/recipe/show')
