@@ -160,9 +160,16 @@ def all_recipes():
     flash("no recipes to display yet")
     return redirect('/create/recipe')
 
-
+# add a route to show a recipe
 @app.route('/recipe/show')
 
 def show_recipe():
     """This function will display the title and contents of a specific recipe"""
     return render_template('show_recipe.html',recipe=recipe)
+
+# add a route to delete a recipe
+@app.route('/recipe/delete')
+def delete():
+    """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
+    RECIPES_INDEX.remove(recipe)
+    return redirect('/recipes/index')
