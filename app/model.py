@@ -49,4 +49,4 @@ class Recipe(object):
 
     def set_id(self):
         """This method create a unique id for User objects"""
-        self.id = uuid4()
+        self.id = uuid.uuid4()

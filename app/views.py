@@ -99,7 +99,9 @@ def update_user():
 @app.route('/user/show')
 def show_user():
     """This function return a tuple showing the user email and name"""
-    return (user.email, user.email)
+    if user:
+        return (user.email, user.email)
+    return """No users to display"""
 
 class RecipeForm(Form):
     """Defines a class RecipeForm that will read data from a html form"""
@@ -164,6 +166,8 @@ def show_recipe():
 # add a route to delete a recipe
 @app.route('/recipe/delete')
 def delete():
-    """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
-    RECIPES_INDEX.remove(recipe)
-    return redirect('/recipes/index')
+    if len(RECIPES_INDEX)>0:
+        """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
+        RECIPES_INDEX.remove(recipe)
+        return redirect('/recipes/index')
+    return "no recipes to delete"

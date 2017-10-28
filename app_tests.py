@@ -102,3 +102,14 @@ class TestApp(unittest.TestCase):
         """This method tests whether count updates everytime a user is created"""
         count = Recipe.count
         self.assertIsNot(count, 0)
+
+    def test_recipe_id(self):
+        """This methods tests whether the set_id method of the recipe class works"""
+        id=self.recipe.set_id
+        self.assertIsNotNone(id)
+
+    def test_user_id(self):
+        """This method tests whether a user id is created for objects of the User class"""
+        id=self.user.id
+        self.assertIsNotNone(id)
+
