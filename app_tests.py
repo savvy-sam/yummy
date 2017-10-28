@@ -21,6 +21,60 @@ class TestApp(unittest.TestCase):
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
+    def test_register(self):
+        """"This method tests whether the route '/register' succesfully renders a page"""
+        indx = self.app.get('/register')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_user_update(self):
+        """"This method tests whether the route '/user/update' succesfully renders a page"""
+        indx = self.app.get('/user/update')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_user_show(self):
+        """"This method tests whether the route '/user/show' succesfully renders a page"""
+        indx = self.app.get('/user/show')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_recipe_create(self):
+        """"This method tests whether the route '/recipe/create' succesfully renders a page"""
+        indx = self.app.get('/recipe/create')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_recipe_update(self):
+        """"This method tests whether the route '/recipe/update' succesfully renders a page"""
+        indx = self.app.get('/recipe/update')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_users_index(self):
+        """"This method tests whether the route '/users' succesfully renders a page"""
+        indx = self.app.get('/users')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_index(self):
+        """"This method tests whether the route '/recipes/index' succesfully renders a page"""
+        indx = self.app.get('/recipes/index')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_index(self):
+        """"This method tests whether the route '/recipe/show' succesfully renders a page"""
+        indx = self.app.get('/recipe/show')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_index(self):
+        """"This method tests whether the route '/recipe/delete' succesfully renders a page"""
+        indx = self.app.get('/recipe/delete')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
     def test_login(self):
         """Test whether this route renders the a page succesfully"""
         indx = self.app.get('/login')
