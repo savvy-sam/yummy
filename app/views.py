@@ -102,11 +102,6 @@ def update_user():
 #re-render form if the POST request is not succesful
     return render_template('register.html', form=form)
 
-@app.route('/recipes')
-def listing():
-    """This function returns a list of all recipes"""
-    return render_template('recipes_index.html')
-
 @app.route('/user/show')
 def show_user():
     """This function return a tuple showing the user email and name"""
@@ -131,7 +126,7 @@ def create_recipe():
 # RECIPE_INDEX is defined as global so that it can be used in different routes
         global RECIPE_INDEX
         RECIPES_INDEX.append(recipe)
-        return recipe.content
+        return redirect('/recipe/show')
     return render_template('recipe.html', form=form)
 
 @app.route('/recipe/update', methods=['GET', 'POST'])
@@ -142,7 +137,7 @@ def update_recipe():
     form = RecipeForm(request.form)
     if request.method == 'POST' and form.validate():
         recipe = Recipe(form.title.data, form.content.data)
-        return recipe.content
+        return redirect('/recipe/show')
 #re-render form if the POST request is not succesful
     return render_template('recipe.html', form=form)
 
@@ -160,7 +155,14 @@ def all_recipes():
     """This function iterates over all_recipes list and return all the recipes"""
     if len(RECIPES_INDEX) >= 1:
         for dish in RECIPES_INDEX:
-            return render_template('recipes_index.html', recipes=RECIPES_INDEX)
+            return render_template('recipes_index.html', recipes=RECIPES_INDEX, user=user)
 #flashes a mesage when the recipes_index list is empty
-    flash("no users to display yet")
-    return redirect('/recipes')
+    flash("no recipes to display yet")
+    return redirect('/create/recipe')
+
+
+@app.route('/recipe/show')
+
+def show_recipe():
+    """This function will display the title and contents of a specific recipe"""
+    return render_template('show_recipe.html',recipe=recipe)

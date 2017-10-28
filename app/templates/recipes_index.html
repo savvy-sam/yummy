@@ -33,7 +33,7 @@
 
 <div class="index">
 
-	<h4 class="text-center text-info"> Dear User.... Here Are Your Recipes</h4>
+	<h4 class="text-center text-info"> Dear {{ user.name }} Here Are Your Recipes</h4>
 	<div class="container">
 
 	<table class="table table-responsive">
@@ -53,8 +53,8 @@
 				<td>{{ dish.title }}</td>
 				<td>{{ dish.content[0:20] }}</td>
 				<td>00.000.00</td>
-				<td><a href="">Show</a></td>
-				<td><a href="">Edit</a></td>
+				<td><a href="{{url_for('show_recipe')}}">Show</a></td>
+				<td><a href="{{url_for('update_recipe')}}">Edit</a></td>
 				<td><a href="">Delete</a></td>
 			</tr>
 			{% endfor %}
