@@ -44,23 +44,16 @@
 			</tr>
 		</thead>
 		<tbody>
+			{% for dish in recipes %}
 			<tr>
-				<td>cooking red cookies</td>
-				<td>Cakes</td>
+				<td>{{ dish.title }}</td>
+				<td>{{ dish.content[0:20] }}</td>
 				<td>00.000.00</td>
 				<td><a href="">Show</a></td>
 				<td><a href="">Edit</a></td>
 				<td><a href="">Delete</a></td>
 			</tr>
-
-			<tr>
-				<td>Making Sugarcane Juice</td>
-				<td>Fruit and Juices</td>
-				<td>000.00..00.1990</td>
-				<td><a href="">Show</a></td>
-				<td><a href="">Edit</a></td>
-				<td><a href="">Delete</a></td>	
-			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>

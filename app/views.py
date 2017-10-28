@@ -81,6 +81,7 @@ def register():
         global user
         user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
 #Append the object user to the USERS_INDEX list
+        global USERS_INDEX
         USERS_INDEX.append(user)
 
         return redirect('/create/recipe')
@@ -127,6 +128,8 @@ def create_recipe():
         global recipe
         recipe = Recipe(form.title.data, form.content.data)
 # Add recipe object to the list RECIPE_INDEX list
+# RECIPE_INDEX is defined as global so that it can be used in different routes
+        global RECIPE_INDEX
         RECIPES_INDEX.append(recipe)
         return recipe.content
     return render_template('recipe.html', form=form)
@@ -157,7 +160,7 @@ def all_recipes():
     """This function iterates over all_recipes list and return all the recipes"""
     if len(RECIPES_INDEX) >= 1:
         for dish in RECIPES_INDEX:
-            return dish.name
+            return render_template('recipes_index.html', recipes=RECIPES_INDEX)
 #flashes a mesage when the recipes_index list is empty
     flash("no users to display yet")
     return redirect('/recipes')
