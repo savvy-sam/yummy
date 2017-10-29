@@ -105,8 +105,8 @@ def show_user():
 
 class RecipeForm(Form):
     """Defines a class RecipeForm that will read data from a html form"""
-    title = StringField('TITLE', [validators.length(max=20)])
-    content = TextAreaField("CONTENT", [validators.length(max=500)])
+    title = StringField('TITLE', [validators.DataRequired(), validators.length(max=20)])
+    content = TextAreaField("CONTENT", [validators.DataRequired(), validators.length(max=500)])
 
 @app.route('/recipe/create', methods=['GET', 'POST'])
 def create_recipe():
