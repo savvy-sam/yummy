@@ -4,5 +4,6 @@ from app import app
 
 #execute app.run() when app is running as a script
 if __name__ == "__main__":
-    app.run()
+#Get port from the environment otherwise use port 5000 
+    app.run('', port=int(os.environ.get('PORT', 5000)))
     
