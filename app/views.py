@@ -93,17 +93,25 @@ def register():
 
 @app.route('/user/update', methods=['GET', 'POST'])
 def update_user():
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        for user in USERS_INDEX:
+            if user.id == id:
+                if request.method == 'POST' and form.validate():
+                    user.name = form.title.data
+                    user.email = form.content.data
+                    user.password= form.password.data
+                    user.confirm =  form.confirm.data
+                    return redirect('/recipes/index')
+#re-render form if the POST request is not succesful
+                return "please submit a form"
+            return 'You are trying to edit a user that doesnt exist'
     """This function collects data from the register form
     It then updates the user object using data obtained from the form
     """
-    form = RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
-        global user
-        user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
-        flash("You have succesfully signed up, create a recipe")
-        return redirect('/')
-#re-render form if the POST request is not succesful
     return render_template('register.html', form=form)
+
+    
 
 @app.route('/user/show')
 def show_user():
