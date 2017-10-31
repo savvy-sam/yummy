@@ -91,8 +91,8 @@ def register():
         #re-render the register form if the the post request is not succesful
     return render_template('register.html', form=form)
 
-@app.route('/user/update', methods=['GET', 'POST'])
-def update_user():
+@app.route('/user/update/<int:id>', methods=['GET', 'POST'])
+def update_user(id):
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         for user in USERS_INDEX:
@@ -201,3 +201,13 @@ def delete(id):
                 return redirect('/recipes/index')   
             return "The Recipe Does not exist"
     return "no recipes to delete"
+
+@app.route('/user/<int:id>/recipes')
+#This route returns all recipes belonging to a particular user in a list
+def user_recipes(id):
+    """list all recipes whose user id is id"""
+    alist= [ recipe for recipe in RECIPES_INDEX if recipe.user_id == id  ]
+    if len(alist) != 0:
+        return "heheheheheeh"
+    return "ooops"
+
