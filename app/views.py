@@ -226,7 +226,22 @@ def user_recipes(id):
         return "heheheheheeh"
     return "ooops"
 
-@app.route('/add/category/<label>/<value>/')
-def add_category(value, label):
-    CATEGORIES.append((value, label))
-    return redirect('/')
+
+class CategoryForm(Form):
+    label= StringField('LABEL', [validators.DataRequired()])
+    value= StringField('CATEGORY', [validators.DataRequired()])
+
+@app.route('/add/category', methods=['GET', 'POST'])
+def add_category():
+    form = CategoryForm(request.form)
+    if request.method == 'POST' and form.validate():
+        CATEGORIES.append((form.value.data, form.label.data))
+        return redirect('/')
+    return render_template('category_form.html', form=form)
+
+@app.route('/<category>/recipes')
+def category_recipes(category):
+    alist = [recipe for recipe in RECIPES_INDEX if recipe.category == category]
+    return render_template('recipes_index.html', recipes=alist, user=user)
+
+@app.route('/<category>/delete')
