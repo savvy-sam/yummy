@@ -52,12 +52,12 @@
 			{% for dish in recipes %}
 			<tr>
 				<td>{{ dish.title }}</td>
-				<td>{{ dish.content[0:20] }}</td>
+				<td>{{ dish.category}}</td>
 				<td>{{ dish.id }}</td>
 				<td>{{ dish.user_id }}</td>
 				<td><a href="{{url_for('show_recipe', id= dish.id)}}">Show</a></td>
-				<td><a href="{{url_for('update_recipe', id=dish.id)}}">Edit</a></td>
-				<td><a href="{{url_for('delete', id=dish.id)}}">Delete</a></td>
+				<td><a href="{{url_for('update_recipe', recipe_id=dish.id)}}">Edit</a></td>
+				<td><a href="{{url_for('delete', recipe_id=dish.id)}}">Delete</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>

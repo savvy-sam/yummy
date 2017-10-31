@@ -23,7 +23,7 @@ class User(object):
         It is an alternative way of creating self.id"""
         self.id = uuid.uuid4()
         return self.id
-        
+
     def logged_in(self):
         """This method checks whether the user is logged in
         It does that by checking whether the user id saved in session is the user's id"""
@@ -35,11 +35,13 @@ class Recipe(object):
 #defines a count to count the number of objects of Recipe class created
     count = 0
 
-    def __init__(self, title, content, login_id):
+    def __init__(self, title, ingridients, procedure, category, login_id ):
         """initializes a User object"""
         Recipe.count += 1
         self.title = title
-        self.content = content
+        self.ingridients = ingridients
+        self.procedure = procedure
+        self.category = category
         self.id = Recipe.count
         self.user_id = login_id
 
