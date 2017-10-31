@@ -17,9 +17,9 @@
 			<p class= "text-info">
 
 				Hello Visitor, To Use This Site You Must Log In
-
-
-				<button class= "btn"><a href="{{url_for('login')}}">LOG IN</a></button>
+				{% if not session.logged_in %}
+					<button class= "btn"><a href="{{url_for('login')}}">LOG IN</a></button>
+				{% endif %}
 				
 			</p>
 

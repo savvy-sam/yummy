@@ -15,8 +15,8 @@ from app.model import Recipe
 USERS_INDEX = []
 RECIPES_INDEX = []
 # declare global variables user and recipe so that they can be used across all methods
-user = User("aaaa", "bbbb", "1111", "1111")
-recipe=Recipe("aaaa", "bbbb")
+user = User("aaaa", "bbbb", 1111, 1111)
+recipe=Recipe("aaaa", "bbbb", 123)
 
 @app.route('/')
 def index():
@@ -28,11 +28,10 @@ class LoginForm(Form):
     email = StringField('ENTER EMAIL', [validators.DataRequired(message='You need to imput your email')])
     password = PasswordField('ENTER PASSWORD', [validators.DataRequired(message='You need to imput a password')])
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """This method logs in a user by saving user.id in session"""
-    if user.logged_in():
+    if session.get("logged_in") == True:
         """checks whether the user is already logged in
         If the user is logged in, it redirects and renders a flash message
         """
@@ -40,16 +39,24 @@ def login():
         flask.flash('You are already logged in')
     else:
         form = LoginForm(request.form)
-        if request.method == 'POST' and form.validate():
+        if request.method == 'POST' or form.validate():
             """reads data from the login form"""
-            if form.email.data == user.email and form.password.data == user.password:
+            if form.email.data == user.email or form.password.data == user.password:
                 """checks whether the provided data matches user details"""
-                user.login_user()
-                """login_user() is defined in the user class"""
-            
-                redirect('recipe/create')
-            return """wrong credentials"""
+#save the user id to session.
+                session["logged_in"] = True
+                session["login_id"] = user.id
+                return redirect('recipe/create')
+            return "You are entering a wrong password"
         return render_template('user_login.html', form=form)
+
+@app.route('/logout')
+def logout():
+    if session["logged_in"] == True:
+        session.pop("logged_in")
+        flash('You have been succesfully logged out!', 'success')
+        return redirect('login')
+    return "You are not logged in"
 
 
 class LoginForm(Form):
@@ -115,29 +122,39 @@ def create_recipe():
     """This function creates an instance of the RecipeForm class
     It reads  the form delivered by requests
     It then creates an instance of the Recipe class from the form data"""
-    form = RecipeForm(request.form)
-    if request.method == 'POST' and form.validate():
+    if session.get('logged_in') == True:
+        form = RecipeForm(request.form)
+        if request.method == 'POST' and form.validate():
 # Create an object recipe of the Recipe class
-        global recipe
-        recipe = Recipe(form.title.data, form.content.data)
+            global recipe
+            login_id = session['login_id']
+            recipe = Recipe(form.title.data, form.content.data, login_id)
 # Add recipe object to the list RECIPE_INDEX list
 # RECIPE_INDEX is defined as global so that it can be used in different routes
-        global RECIPE_INDEX
-        RECIPES_INDEX.append(recipe)
-        return redirect('/recipes/index')
-    return render_template('recipe.html', form=form)
-
-@app.route('/recipe/update', methods=['GET', 'POST'])
-def update_recipe():
+            global RECIPE_INDEX
+            RECIPES_INDEX.append(recipe)
+            return redirect('/recipes/index')
+        return render_template('recipe.html', form=form)
+    return 'login first man'
+@app.route('/recipe/update/<int:id>', methods=['GET', 'POST'])
+def update_recipe(id):
     """This function collects data from the register form
     It then updates the user object using data obtained from the form
     """
     form = RecipeForm(request.form)
     if request.method == 'POST' and form.validate():
-        recipe = Recipe(form.title.data, form.content.data)
-        return redirect('/recipe/show')
+        for recipe in RECIPES_INDEX:
+            if recipe.id == id:
+                if request.method == 'POST' and form.validate():
+                    login_id = session['login_id']
+                    #recipe = Recipe(form.title.data, form.content.data, login_id)
+                    recipe.title = form.title.data
+                    recipe.content = form.content.data
+                    return redirect('/recipes/index')
 #re-render form if the POST request is not succesful
-    return render_template('recipe.html', form=form)
+                return "please submit a form"
+            return 'You are trying to edit a recipe that doesnt exist'
+    return render_template('recipe.html', form=form )
 
 @app.route('/users')
 def  people():
@@ -159,22 +176,20 @@ def all_recipes():
     return redirect('/recipe/create')
 
 # add a route to show a recipe
-@app.route('/recipe/show')
+@app.route('/recipe/show/<id>')
 
-def show_recipe():
+def show_recipe(id):
     """This function will display the title and contents of a specific recipe"""
     return render_template('show_recipe.html',recipe=recipe)
 
 # add a route to delete a recipe
 @app.route('/recipe/delete/<int:id>')
 def delete(id):
+    """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
     if len(RECIPES_INDEX)>0:
         for recipe in RECIPES_INDEX:
             if recipe.id == id:
                 RECIPES_INDEX.remove(recipe)
-                return "redirect('/recipes/index')"   
+                return redirect('/recipes/index')   
             return "The Recipe Does not exist"
-        """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
-       
-        #return redirect('/recipes/index')
     return "no recipes to delete"

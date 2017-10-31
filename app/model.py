@@ -2,6 +2,7 @@
 #import uuid for generating random ids
 import  uuid
 from flask import session
+from flask import session
 
 class User(object):
     """creates the User class that inherits from object class"""
@@ -23,12 +24,7 @@ class User(object):
         It is an alternative way of creating self.id"""
         self.id = uuid.uuid4()
         return self.id
-
-
-    def login_user(self):
-        """This method saves a user id in the session"""
-        session['user_id'] = self.id
-
+        
     def logged_in(self):
         """This method checks whether the user is logged in
         It does that by checking whether the user id saved in session is the user's id"""
@@ -40,12 +36,13 @@ class Recipe(object):
 #defines a count to count the number of objects of Recipe class created
     count = 0
 
-    def __init__(self, title, content):
+    def __init__(self, title, content, login_id):
         """initializes a User object"""
         Recipe.count += 1
         self.title = title
         self.content = content
         self.id = Recipe.count
+        self.user_id = login_id
 
 
     def set_id(self):

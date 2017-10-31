@@ -42,6 +42,7 @@
 				<td><strong>TITLE</strong></td>
 				<td><strong>CATEGORY</strong></td>
 				<td><strong>RECIPE ID</strong></td>
+				<td><strong>USER ID</strong></td>>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -53,8 +54,9 @@
 				<td>{{ dish.title }}</td>
 				<td>{{ dish.content[0:20] }}</td>
 				<td>{{ dish.id }}</td>
-				<td><a href="{{url_for('show_recipe')}}">Show</a></td>
-				<td><a href="{{url_for('update_recipe')}}">Edit</a></td>
+				<td>{{ dish.user_id }}</td>
+				<td><a href="{{url_for('show_recipe', id= dish.id)}}">Show</a></td>
+				<td><a href="{{url_for('update_recipe', id=dish.id)}}">Edit</a></td>
 				<td><a href="{{url_for('delete', id=dish.id)}}">Delete</a></td>
 			</tr>
 			{% endfor %}
