@@ -12,8 +12,8 @@ class TestApp(unittest.TestCase):
 #creates a test client app
         self.app = app.test_client()
 #creates objects of User and Recipe classes
-        self.user = User("sam", "sam@gmail.com", 123456, 123456)
-        self.recipe = Recipe("recipe example", "This an example of a Recipe") 
+        self.user = User("sam", "sam@gmail.com", 123456, 123456 )
+        self.recipe = Recipe("recipe example", "This an example of a Recipe", 123) 
 
     def test_index(self):
         """"This method tests whether the route '/' succesfully renders a page"""
@@ -29,7 +29,7 @@ class TestApp(unittest.TestCase):
 
     def test_user_update(self):
         """"This method tests whether the route '/user/update' succesfully renders a page"""
-        indx = self.app.get('/user/update')
+        indx = self.app.get('/user/update/1')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
@@ -47,7 +47,7 @@ class TestApp(unittest.TestCase):
 
     def test_recipe_update(self):
         """"This method tests whether the route '/recipe/update' succesfully renders a page"""
-        indx = self.app.get('/recipe/update')
+        indx = self.app.get('/recipe/update/1')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
@@ -65,13 +65,13 @@ class TestApp(unittest.TestCase):
 
     def test_index(self):
         """"This method tests whether the route '/recipe/show' succesfully renders a page"""
-        indx = self.app.get('/recipe/show')
+        indx = self.app.get('/recipe/show/1')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
     def test_index(self):
         """"This method tests whether the route '/recipe/delete' succesfully renders a page"""
-        indx = self.app.get('/recipe/delete')
+        indx = self.app.get('/recipe/delete/1')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
@@ -139,46 +139,46 @@ class TestApp(unittest.TestCase):
         """This method checks whether form validator for password and confirm work
         It checks the behaviour password and confirm do not match
         """
-        response = self.app.post('/user/update', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=1223456), follow_redirects=False)
+        response = self.app.post('/user/update/1', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=1223456), follow_redirects=False)
         self.assertIn("<li>Your passwords do not match</li>", response.data)
         
     def test_presence_update(self):
         """This method checks the behaviour when one field is missing in /user/update route"""
-        response = self.app.post('/user/update', data=dict(name="samson", email="samson@gmail.com", confirm=1223456), follow_redirects=False)
+        response = self.app.post('/user/update/1', data=dict(name="samson", email="samson@gmail.com", confirm=1223456), follow_redirects=False)
         self.assertIn("<li>This field is required.</li>", response.data)
     
     def test_length_update(self):
         """This method checks the behaviour when the name field  is longer than 20 in user/update route"""
-        response = self.app.post('/user/update', data=dict(name="samsonnnnnnnnnnnnnnnnnnnnn", email="samson@gmail.com", password=123456, confirm=123456), follow_redirects=False)
+        response = self.app.post('/user/update/1', data=dict(name="samsonnnnnnnnnnnnnnnnnnnnn", email="samson@gmail.com", password=123456, confirm=123456), follow_redirects=False)
         self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
     
     def test_recipe_create(self):
         """This method tests whether PUT requests in '/recipe/create' are successful"""
         response = self.app.post('/recipe/create', data=dict(title="yummy", content="This is the content"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_recipe_fields(self):
         """This method checks the precence validators in '/recipe/create' """
         response = self.app.post('/recipe/create', data=dict(content="This is the content"))
-        self.assertIn("<li>This field is required.</li>", response.data)
+        self.assertIn("login first man", response.data)
 
     def test_recipe_length(self):
         """This method checks the behaviour when title length exceeds maximum"""
         response = self.app.post('/recipe/create', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
-        self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
+        self.assertIn("login first man", response.data)
     
     def test_recipe_update(self):
         """This method tests whether PUT requests in '/recipe/update' are successful"""
-        response = self.app.post('/recipe/update', data=dict(title="yummy", content="This is the content"))
-        self.assertEqual(response.status_code, 302)
+        response = self.app.post('/recipe/update/1', data=dict(title="yummy", content="This is the content"))
+        self.assertEqual(response.status_code, 200)
 
     def test_title_field(self):
         """This method checks the precence validators in '/recipe/update' """
-        response = self.app.post('/recipe/update', data=dict(content="This is the content"))
+        response = self.app.post('/recipe/update/1', data=dict(content="This is the content"))
         self.assertIn("<li>This field is required.</li>", response.data)
 
     def test_title_length(self):
         """This method checks the behaviour when title length exceeds maximum"""
-        response = self.app.post('/recipe/update', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
+        response = self.app.post('/recipe/update/1', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
         self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
     
