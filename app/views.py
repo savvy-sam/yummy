@@ -228,11 +228,13 @@ def user_recipes(id):
 
 
 class CategoryForm(Form):
+    """This creates an object from form data"""
     label= StringField('LABEL', [validators.DataRequired()])
     value= StringField('CATEGORY', [validators.DataRequired()])
 
 @app.route('/add/category', methods=['GET', 'POST'])
 def add_category():
+    """This extracts data from the category form and adds it to a list as a tuple """
     form = CategoryForm(request.form)
     if request.method == 'POST' and form.validate():
         CATEGORIES.append((form.value.data, form.label.data))
@@ -241,7 +243,16 @@ def add_category():
 
 @app.route('/<category>/recipes')
 def category_recipes(category):
+    """returns all recipes whose category is the same as the function parameters"""
     alist = [recipe for recipe in RECIPES_INDEX if recipe.category == category]
     return render_template('recipes_index.html', recipes=alist, user=user)
 
 @app.route('/<category>/delete')
+def delete_category(category):
+    """deletes a category from the CATEGORIES LISTs"""
+    for item in CATEGORIES:
+        if item[0] == category:
+            CATEGORIES.remove(item)
+            return redirect('/')
+
+
