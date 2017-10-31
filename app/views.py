@@ -31,7 +31,6 @@ class LoginForm(Form):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm(request.form)
     """This method logs in a user by saving user.id in session"""
     if user.logged_in():
         """checks whether the user is already logged in
@@ -40,13 +39,16 @@ def login():
         redirect('/create/recipe')
         flask.flash('You are already logged in')
     else:
-        if  request.method == 'POST' and form.validate():
+        form = LoginForm(request.form)
+        if request.method == 'POST' and form.validate():
             """reads data from the login form"""
             if form.email.data == user.email and form.password.data == user.password:
                 """checks whether the provided data matches user details"""
                 user.login_user()
                 """login_user() is defined in the user class"""
-                redirect('/create/recipe')
+            
+                redirect('recipe/create')
+            return """wrong credentials"""
         return render_template('user_login.html', form=form)
 
 
@@ -78,7 +80,7 @@ def register():
         global USERS_INDEX
         USERS_INDEX.append(user)
 
-        return redirect('/create/recipe')
+        return redirect('/recipe/create')
         #re-render the register form if the the post request is not succesful
     return render_template('register.html', form=form)
 
@@ -164,10 +166,15 @@ def show_recipe():
     return render_template('show_recipe.html',recipe=recipe)
 
 # add a route to delete a recipe
-@app.route('/recipe/delete')
-def delete():
+@app.route('/recipe/delete/<int:id>')
+def delete(id):
     if len(RECIPES_INDEX)>0:
+        for recipe in RECIPES_INDEX:
+            if recipe.id == id:
+                RECIPES_INDEX.remove(recipe)
+                return "redirect('/recipes/index')"   
+            return "The Recipe Does not exist"
         """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
-        RECIPES_INDEX.remove(recipe)
-        return redirect('/recipes/index')
+       
+        #return redirect('/recipes/index')
     return "no recipes to delete"

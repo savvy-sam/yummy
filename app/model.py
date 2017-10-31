@@ -15,7 +15,7 @@ class User(object):
         self.email = email
         self.password = password
         self.confirm = confirm
-        self.id=uuid.uuid4()
+        self.id = User.count
 
     def set_id(self):
         """This method create a unique id for User objects
@@ -45,6 +45,7 @@ class Recipe(object):
         Recipe.count += 1
         self.title = title
         self.content = content
+        self.id = Recipe.count
 
 
     def set_id(self):
