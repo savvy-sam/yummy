@@ -25,13 +25,16 @@ def index():
 
 class LoginForm(Form):
     """This class will read data from the login form"""
-    email = StringField('ENTER EMAIL', [validators.DataRequired(message='You need to imput your email')])
-    password = PasswordField('ENTER PASSWORD', [validators.DataRequired(message='You need to imput a password')])
+    email = StringField('ENTER EMAIL',[
+        validators.DataRequired(
+            message='You need to imput your email')])
+    password = PasswordField('ENTER PASSWORD', [
+        validators.DataRequired(message='You need to imput a password')])
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """This method logs in a user by saving user.id in session"""
-    if session.get("logged_in") == True:
+    if session.get("logged_in"):
         """checks whether the user is already logged in
         If the user is logged in, it redirects and renders a flash message
         """
@@ -52,7 +55,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    if session["logged_in"] == True:
+    if session["logged_in"]:
         session.pop("logged_in")
         flash('You have been succesfully logged out!', 'success')
         return redirect('login')
@@ -61,8 +64,10 @@ def logout():
 
 class LoginForm(Form):
     """This class will read data from the login form"""
-    email = StringField('ENTER EMAIL', [validators.DataRequired(message='You need to imput your email')])
-    password = PasswordField('ENTER PASSWORD', [validators.DataRequired(message='You need to imput a password')])
+    email = StringField('ENTER EMAIL', [
+        validators.DataRequired(message='You need to imput your email')])
+    password = PasswordField('ENTER PASSWORD', [
+        validators.DataRequired(message='You need to imput a password')])
 
 class RegisterForm(Form):
     """This will define a class that reads data from the register form
@@ -70,7 +75,8 @@ class RegisterForm(Form):
     """
     name = StringField('NAME', [validators.length(max=20)])
     email = StringField("EMAIL", [validators.length(max=20)])
-    password = PasswordField("PASSWORD", [validators.DataRequired(), validators.EqualTo('confirm', message="Your passwords do not match")])
+    password = PasswordField("PASSWORD", [
+        validators.DataRequired(), validators.EqualTo('confirm', message="Your passwords do not match")])
     confirm = PasswordField('CONFIRM PASSWORD')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -100,7 +106,7 @@ def update_user(id):
                 if request.method == 'POST' and form.validate():
                     user.name = form.title.data
                     user.email = form.content.data
-                    user.password= form.password.data
+                    user.password = form.password.data
                     user.confirm =  form.confirm.data
                     return redirect('/recipes/index')
 #re-render form if the POST request is not succesful
@@ -110,8 +116,6 @@ def update_user(id):
     It then updates the user object using data obtained from the form
     """
     return render_template('register.html', form=form)
-
-    
 
 @app.route('/user/show')
 def show_user():
@@ -162,7 +166,7 @@ def update_recipe(id):
 #re-render form if the POST request is not succesful
                 return "please submit a form"
             return 'You are trying to edit a recipe that doesnt exist'
-    return render_template('recipe.html', form=form )
+    return render_template('recipe.html', form=form)
 
 @app.route('/users')
 def  people():
@@ -188,13 +192,13 @@ def all_recipes():
 
 def show_recipe(id):
     """This function will display the title and contents of a specific recipe"""
-    return render_template('show_recipe.html',recipe=recipe)
+    return render_template('show_recipe.html', recipe=recipe)
 
 # add a route to delete a recipe
 @app.route('/recipe/delete/<int:id>')
 def delete(id):
     """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
-    if len(RECIPES_INDEX)>0:
+    if len(RECIPES_INDEX) > 0:
         for recipe in RECIPES_INDEX:
             if recipe.id == id:
                 RECIPES_INDEX.remove(recipe)
@@ -206,8 +210,7 @@ def delete(id):
 #This route returns all recipes belonging to a particular user in a list
 def user_recipes(id):
     """list all recipes whose user id is id"""
-    alist= [ recipe for recipe in RECIPES_INDEX if recipe.user_id == id  ]
+    alist = [recipe for recipe in RECIPES_INDEX if recipe.user_id == id]
     if len(alist) != 0:
         return "heheheheheeh"
     return "ooops"
-

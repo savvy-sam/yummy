@@ -2,7 +2,6 @@
 #import uuid for generating random ids
 import  uuid
 from flask import session
-from flask import session
 
 class User(object):
     """creates the User class that inherits from object class"""
