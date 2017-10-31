@@ -1,7 +1,5 @@
-<a href="https://travis-ci.org/savvy-sam/yummy">
-<img class="notice-badge" src="https://travis-ci.org/savvy-sam/yummy.svg?branch=develop" alt="Badge"/>
-</a>
-<a href='https://coveralls.io/github/savvy-sam/yummy?branch=develop'><img src='https://coveralls.io/repos/github/savvy-sam/yummy/badge.svg?branch=develop' alt='Coverage Status' /></a>
+[![Build Status](https://travis-ci.org/savvy-sam/yummy.svg?branch=develop)](https://travis-ci.org/savvy-sam/yummy)
+[![Coverage Status](https://coveralls.io/repos/github/savvy-sam/yummy/badge.svg?branch=develop)](https://coveralls.io/github/savvy-sam/yummy?branch=develop)
 
 
 
