@@ -1,23 +1,7 @@
-{% with messages = get_flashed_messages() %}
-   {% if messages %}
-      {% for message in messages %}
-         {{ message }}
-      {% endfor %}
-   {% endif %}
-{% endwith %}
+{% extends "base.html" %}
 
+{% block content %}
 <!DOCTYPE html>
-{% block head %}
-<head>
-	<title>User Login Page </title>
-
-	<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
-	</head>
-{% endblock%}
-
-{% block body %}
 <body id="body">
 	<div class='jumbostron'>
 <div class="container">
@@ -43,6 +27,5 @@
 </div>	
 </div>
 </body>
-
-{% endblock %}
 </html>
+{% endblock %}

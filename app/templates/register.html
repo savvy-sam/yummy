@@ -1,39 +1,8 @@
+{% extends "base.html" %}
 
-
-{% block head %}
-<head>
-<title>Register</title>
-
-        <link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
-</head>
-{% endblock %}
-
-{% block body %}
-<div class="container", id ='body'>
-
-	<div>
-		<nav class="navbar">
-			<div class="container">
-
-				<div class="navbar-header">
-					<a href="#" class="navbar-brand">YUMMY YUMMY</a>	
-				</div>
-				<ul class="nav navbar-nav navbar-right" >
-
-					<li class="horizontal"><a href=""></a>HOME</li>
-					<li class="horizontal"><a href=""></a>CONTACT US</li>
-					<li><a href=""></a>SUBSCRIBE</li>
-					<li><a href=""></a>ABOUT</li>
-					<li><a href=""></a>SIGN IN</li>
-					
-				</ul>
-				
-			</div>
-			
-		</nav>
-	</div>
+{% block content %}
+<body id="body">
+<div class="container">
 
 {% from "includes/_form_helpers.html" import render_field %}
 <form method='POST' action ="">
@@ -66,7 +35,6 @@
 
 
 </form>
-</div>	
-
-
+</div>
+</body>
 {% endblock %}

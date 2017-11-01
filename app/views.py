@@ -45,7 +45,7 @@ def login():
     else:
         if request.method == 'POST' or form.validate():
             """reads data from the login form"""
-            if form.email.data == user.email or form.password.data == user.password:
+            if form.email.data == user.email and form.password.data == user.password:
                 """checks whether the provided data matches user details"""
 #save the user id to session.
                 session["logged_in"] = True
@@ -61,7 +61,7 @@ def logout():
     if session["logged_in"]:
         session.pop("logged_in")
         flash('You have been succesfully logged out!', 'success')
-        return redirect('login')
+        return redirect('/')
     flash("Already logged in")
     return redirect('/')
 
@@ -80,9 +80,8 @@ class RegisterForm(Form):
     name = StringField('NAME', [validators.length(max=20)])
     email = StringField("EMAIL", [validators.length(
         max=20)])
-    email = StringField("EMAIL", [validators.length(
-        max=20), validators.Regexp(
-        '/\S+@\S+\.\S+/', message="Invalid email format")])
+    #email = StringField("EMAIL", [validators.length(
+    #   max=20), validators.Regexp('/^\S+@\S+\.\S+$/')])
     password = PasswordField("PASSWORD", [
         validators.DataRequired(), validators.EqualTo('confirm', message="Your passwords do not match")])
     confirm = PasswordField('CONFIRM PASSWORD')
@@ -93,15 +92,19 @@ def register():
     It reads  the form delivered by requests
     It then creates an instance of the User class from the form data"""
     form = RegisterForm(request.form)
+    print(">>>  ", str(form.email.data))
     if request.method == 'POST' and form.validate():
+#        if email_uniquenes(str(form.email.data)):
 #Create an object user of the User class
-        global user
-        user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
+            global user
+            user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
 #Append the object user to the USERS_INDEX list
-        global USERS_INDEX
-        USERS_INDEX.append(user)
-
-        return redirect('/login')
+            global USERS_INDEX
+            USERS_INDEX.append(user)
+            flash('please log in to continues')
+            return redirect('/login')
+ #       flash("This email is already in use")
+#        return redirect('/')
         #re-render the register form if the the post request is not succesful
     return render_template('register.html', form=form)
 
@@ -169,6 +172,7 @@ def update_recipe(recipe_id):
     if request.method == 'POST' and form.validate():
         for recipe in RECIPES_INDEX:
             if recipe.id == recipe_id:
+                if correct_user(recipe):
                     login_id = session['login_id']
                     #recipe = Recipe(form.title.data, form.content.data, login_id)
                     recipe.title = form.title.data
@@ -176,6 +180,8 @@ def update_recipe(recipe_id):
                     recipe.category = form.category.data
                     recipe.procedure = form.procedure.data
                     return redirect('/recipes/index')
+                flash("are you trying to edit a recipe that doesnt belong to you?")
+                return redirect('/recipes/index')
 #re-render form if the POST request is not succesful
             flash("You are trying to edit an recipe that doesnt belong to you")
             return redirect('/login') 
@@ -214,10 +220,15 @@ def delete(recipe_id):
     if len(RECIPES_INDEX) > 0:
         for recipe in RECIPES_INDEX:
             if recipe.id == recipe_id:
-                RECIPES_INDEX.remove(recipe)
+                if correct_user(recipe):
+                    RECIPES_INDEX.remove(recipe)
+                    return redirect('/recipes/index')
+                flash("Your are trying to delete a recipe that doesnt belong to you")
                 return redirect('/recipes/index')   
-            return "The Recipe Does not exist"
-    return "no recipes to delete"
+            flash('that message does not exist')
+            return redirect('/recipes/index')
+    flash("There are currently no rrecipes to delete")
+    return redirect('/')
 
 @app.route('/user/<int:id>/recipes')
 #This route returns all recipes belonging to a particular user in a list
@@ -225,8 +236,9 @@ def user_recipes(id):
     """list all recipes whose user id is id"""
     alist = [recipe for recipe in RECIPES_INDEX if recipe.user_id == id]
     if len(alist) != 0:
-        return "heheheheheeh"
-    return "ooops"
+        return render_template('recipes_index.html', recipes=alist, user=user)
+    flash("you do not have any recipes yet") 
+    return redirect('/recipes/index')       
 
 
 class CategoryForm(Form):
@@ -258,3 +270,15 @@ def delete_category(category):
             return redirect('/')
 
 
+def correct_user(recipe):
+    """Checks whether the signed in user is the owner of the recipe"""
+    login_id = session['login_id']
+    login_id == recipe.user_id
+
+
+def email_uniquenes(email):
+
+    """Checks whether an email is already in use"""
+    UserList=[user for user in USERS_INDEX if email == user.email]
+    print(">>>  ", len(UserList))
+    len(UserList) == 0

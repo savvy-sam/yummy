@@ -1,16 +1,5 @@
-{% with messages = get_flashed_messages() %}
-   {% if messages %}
-      {% for message in messages %}
-         {{ message }}
-      {% endfor %}
-   {% endif %}
-{% endwith %}
-<!DOCTYPE html>
-<head>
-	<title> Users Recipes </title>
-	    <link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
+{% extends "base.html" %}
+{% block content %}
 <body class= "container table-c">
 
 <div class="index">
@@ -24,7 +13,7 @@
 				<td><strong>TITLE</strong></td>
 				<td><strong>CATEGORY</strong></td>
 				<td><strong>RECIPE ID</strong></td>
-				<td><strong>USER ID</strong></td>
+				<td><strong>USER NAME</strong></td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -46,6 +35,6 @@
 	</table>
 </div>
 </div>
-
 </body>
 </html>
+{% endblock %}

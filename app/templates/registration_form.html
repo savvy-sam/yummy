@@ -1,34 +1,6 @@
-</!DOCTYPE html>
-<html>
-<head>
-	<title>Regitration Page </title>
-	<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
-</head>
-<body id="body">
-
-	<div>
-		<nav class="navbar">
-			<div class="container">
-
-				<div class="navbar-header">
-					<a href="#" class="navbar-brand">YUMMY YUMMY</a>	
-				</div>
-				<ul class="nav navbar-nav navbar-right" >
-
-					<li class="horizontal"><a href=""></a>HOME</li>
-					<li class="horizontal"><a href=""></a>CONTACT US</li>
-					<li><a href=""></a>SUBSCRIBE</li>
-					<li><a href=""></a>ABOUT</li>
-					<li><a href=""></a>SIGN IN</li>
-					
-				</ul>
-				
-			</div>
-			
-		</nav>
-	</div>
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
 
 	<div class="container">
 	<h2 class="text text-center header">WELCOME TO YUMMY RECIPIES</h2>
@@ -70,3 +42,4 @@
 </div>
 </body>
 </html>
+{% endblock %}

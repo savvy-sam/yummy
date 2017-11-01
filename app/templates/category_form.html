@@ -1,4 +1,9 @@
+{% extends "base.html"%}
+
+{% block content %}
+
 {% from "includes/_form_helpers.html" import render_field %}
+<div class="container" id="body">
 
 <form method='POST' action ="">
 
@@ -17,6 +22,7 @@
 	<input type = "Submit" class= "btn btn-primary"  value="Submit" >
 
 
-	</form>
+</form>
 
 </div>
+{% endblock %}
