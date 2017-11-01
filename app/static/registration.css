@@ -14,8 +14,7 @@
 	margin-top: 2%;
 }
 #body{
-	background-color:  #cacfd2;
-
+	background-image: url('recipe.jpeg');
 }
 
 .table-1{
@@ -35,4 +34,25 @@
 
 .index{
 	padding-top:  10%;
+}
+
+.bar{
+	ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+}
+
+.list{
+	display: inline;
+    color: #000;
+    padding: 8px 16px;
+}
+.sidebar{
+    overflow:auto;
+    height:100%;
+    top:185px;
+    background-color: #00FFFF;
+    margin-left : 10px;
 }

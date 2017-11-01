@@ -19,10 +19,10 @@ RECIPES_INDEX = []
 user = User("aaaa", "bbbb", 1111, 1111)
 recipe=Recipe("aaaa", "bbbb", 123, 'ccc', 'dddd')
 
-@app.route('/')
+@app.route('/',)
 def index():
     """This function will return the index.html when the route is triggered"""
-    return render_template('index.html')
+    return render_template('index.html', CATEGORIES=CATEGORIES)
 
 class LoginForm(Form):
     """This class will read data from the login form"""
@@ -69,15 +69,17 @@ def logout():
 class LoginForm(Form):
     """This class will read data from the login form"""
     email = StringField('ENTER EMAIL', [
-        validators.DataRequired(message='You need to imput your email')])
+        validators.DataRequired(message='You need to input your email')])
     password = PasswordField('ENTER PASSWORD', [
-        validators.DataRequired(message='You need to imput a password')])
+        validators.DataRequired(message='You need to input a password')])
 
 class RegisterForm(Form):
     """This will define a class that reads data from the register form
     The Form parameter is a functionality of wtforms
     """
     name = StringField('NAME', [validators.length(max=20)])
+    email = StringField("EMAIL", [validators.length(
+        max=20)])
     email = StringField("EMAIL", [validators.length(
         max=20), validators.Regexp(
         '/\S+@\S+\.\S+/', message="Invalid email format")])
@@ -99,7 +101,7 @@ def register():
         global USERS_INDEX
         USERS_INDEX.append(user)
 
-        return redirect('/recipe/create')
+        return redirect('/login')
         #re-render the register form if the the post request is not succesful
     return render_template('register.html', form=form)
 
@@ -238,7 +240,7 @@ def add_category():
     form = CategoryForm(request.form)
     if request.method == 'POST' and form.validate():
         CATEGORIES.append((form.value.data, form.label.data))
-        return redirect('/')
+        return redirect('/recipe/create')
     return render_template('category_form.html', form=form)
 
 @app.route('/<category>/recipes')

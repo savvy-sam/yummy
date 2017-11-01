@@ -9,33 +9,40 @@
 </head>
 <body id="body">
 
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">YUMMY YUMMY</a>
+    </div>
+    <ul class="bar">
+      <li class="list"><a href="#">Home</a></li>
+      <li class="list"><a href="#">ABOUT</a></li>
+      {% if not session.get('logged_in')%}
+      <li class="list"><a href="{{url_for('login')}}">LOG IN</a></li>
+      <li class="list"><a href="{{url_for('register')}}">SIGN UP</a></li>
+      {% else %}
+      <li class="list"><a href="{{url_for('create_recipe')}}">MAKE RECIPE</a></li>
+      <li class="list"><a href="{{url_for('logout')}}">LOGOUT</a></li>
+      {% endif %}
 
-	<div class= "container">
+    </ul>
+  </div>
+</nav>
+<div class= 'container'>
+<div class='sidebar'>
+	<div class= "row">
+	 <div class="col-lg-4">
+{% for menu in CATEGORIES %}
 
-		<div class ="jumbotron">
-
-			<p class= "text-info">
-				
-					<button class= "btn"><a href="{{url_for('login')}}">LOG IN</a></button>
-			</p>
-
-
-			<p class="text-info">
-
-				Dont Have An Account?
-
-
-				<button class="btn"><a href ="{{url_for('register')}}">CREATE AN ACCOUNT</a></button>
-			</p>
-
-
-			</div>
-		
-
-
-	</div>
-
-
-
+<li>
+	<a href="{{url_for('category_recipes', category= menu[0])}}">
+		{{ menu[1] }}
+	</a>
+</li>
+{% endfor %}
+</div>
+</div>
+</div>
+</div>
 </body>
-</html>>
+</html>

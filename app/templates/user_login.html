@@ -1,3 +1,11 @@
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
 <!DOCTYPE html>
 {% block head %}
 <head>
@@ -11,6 +19,7 @@
 
 {% block body %}
 <body id="body">
+	<div class='jumbostron'>
 <div class="container">
 
 	{% from "includes/_form_helpers.html" import render_field %}
@@ -32,6 +41,7 @@
 
 </form>
 </div>	
+</div>
 </body>
 
 {% endblock %}
