@@ -33,6 +33,25 @@ class TestApp(unittest.TestCase):
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
+    def test_user_category_creation(self):
+        """"This method tests whether the route '/add/category' succesfully renders a page"""
+        indx = self.app.get('add/category')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+    def test_category_delete(self):
+        """"This method tests whether the route '/cakes/delete' succesfully renders a page"""
+        indx = self.app.get('/cakes/delete')
+#Test whether  the route returns HTTP code 302
+        self.assertEqual(indx.status_code, 302)
+
+    def category_recipes(self):
+        """"This method tests whether the route '/cakes/recipe' succesfully renders a page"""
+        indx = self.app.get('/cakes/recipes')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+
     #def test_user_show(self):
         """"This method tests whether the route '/user/show' succesfully renders a page"""
     #   indx = self.app.get('/user/show')

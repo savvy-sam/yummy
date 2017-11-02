@@ -1,47 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title> WELCOME TO YUMMY RECIPES</title>
-
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
-</head>
-<body id="body">
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">YUMMY YUMMY</a>
-    </div>
-    <ul class="bar">
-      <li class="list"><a href="#">Home</a></li>
-      <li class="list"><a href="#">ABOUT</a></li>
-      {% if not session.get('logged_in')%}
-      <li class="list"><a href="{{url_for('login')}}">LOG IN</a></li>
-      <li class="list"><a href="{{url_for('register')}}">SIGN UP</a></li>
-      {% else %}
-      <li class="list"><a href="{{url_for('create_recipe')}}">MAKE RECIPE</a></li>
-      <li class="list"><a href="{{url_for('logout')}}">LOGOUT</a></li>
-      {% endif %}
-
-  </div>
-</nav>
-<div class= 'container'>
-<div class='sidebar'>
-	<div class= "row">
-	 <div class="col-lg-4">
-{% for menu in CATEGORIES %}
-
-<li>
-	<a href="{{url_for('category_recipes', category= menu[0])}}">
-		{{ menu[1] }}
-	</a>
-</li>
-{% endfor %}
+{% extends "base.html" %}
+{% block content %}
+<div id="body">
+	<p> we the people </p>
 </div>
-</div>
-</div>
-</div>
-</body>
-</html>
+{% endblock %}

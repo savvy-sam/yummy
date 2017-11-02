@@ -18,13 +18,14 @@
       <a class="navbar-brand" href="#">YUMMY YUMMY</a>
     </div>
     <ul class="bar">
-      <li class="list"><a href="#">Home</a></li>
-      <li class="list"><a href="#">ABOUT</a></li>
+      <li class="list"><a href="{{url_for('index')}}">Home</a></li>
       {% if not session.get('logged_in')%}
       <li class="list"><a href="{{url_for('login')}}">LOG IN</a></li>
       <li class="list"><a href="{{url_for('register')}}">SIGN UP</a></li>
       {% else %}
       <li class="list"><a href="{{url_for('create_recipe')}}">MAKE RECIPE</a></li>
+      <li class="list"><a href="{{url_for('all_recipes')}}">ALL RECIPES</a></li>
+      <li class="list"><a href="{{url_for('user_recipes', id=session.get('login_id'))}}">MY RECIPES</a></li>
       <li class="list"><a href="{{url_for('logout')}}">LOGOUT</a></li>
      {% endif %}
     </ul>
