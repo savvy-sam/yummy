@@ -314,3 +314,4 @@ def login_required(f):
             return redirect(url_for('app.login'))
         return f(*args, **kwargs)
     return decorated_function
+    
