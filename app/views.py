@@ -201,7 +201,7 @@ def all_recipes():
     """This function iterates over all_recipes list and return all the recipes"""
     if len(RECIPES_INDEX) >= 1:
         for dish in RECIPES_INDEX:
-            return render_template('recipes_index.html', recipes=RECIPES_INDEX, user=user)
+            return render_template('recipes_index.html', recipes=RECIPES_INDEX, user=user, CATEGORIES=CATEGORIES)
 #flashes a mesage when the recipes_index list is empty
     flash("no recipes to display yet")
     return redirect('/recipe/create')
@@ -233,7 +233,7 @@ def user_recipes(id):
     """list all recipes whose user id is id"""
     alist = [recipe for recipe in RECIPES_INDEX if recipe.user_id == id]
     if len(alist) != 0:
-        return render_template('recipes_index.html', recipes=alist, user=user)
+        return render_template('recipes_index.html', recipes=alist, user=user, CATEGORIES=CATEGORIES)
     flash("you do not have any recipes yet") 
     return redirect('/recipes/index')       
 
@@ -256,7 +256,7 @@ def add_category():
 def category_recipes(category):
     """returns all recipes whose category is the same as the function parameters"""
     alist = [recipe for recipe in RECIPES_INDEX if recipe.category == category]
-    return render_template('recipes_index.html', recipes=alist, user=user)
+    return render_template('recipes_index.html', recipes=alist, user=user, CATEGORIES=CATEGORIES)
 
 @app.route('/<category>/delete')
 def delete_category(category):

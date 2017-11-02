@@ -14,9 +14,10 @@
 	margin-top: 2%;
 }
 #body{
-	background-image: url('recipe.jpeg');
-	background-size: cover;
-	background-repeat: no-repeat; 
+    background-image: url(recipe.jpeg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 100%;
 }
 
 .table-1{
@@ -57,4 +58,19 @@
     top:185px;
     background-color: #00FFFF;
     margin-left : 10px;
+}
+
+.bartop{
+	background-color: #581845;
+}
+.parts{
+	padding-top: 150px;
+    padding-bottom: 0px;
+
+}
+
+.parts{
+	padding-top: 150px;
+    padding-bottom: 0px;
+
 }
