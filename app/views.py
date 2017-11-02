@@ -6,6 +6,8 @@ from flask import request
 from flask import redirect
 from flask import flash
 from flask import session
+from flask import url_for
+from functools import wraps
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators, SelectField
 from app import app
 from app.model import User
@@ -18,6 +20,25 @@ RECIPES_INDEX = []
 # declare global variables user and recipe so that they can be used across all methods
 user = User("aaaa", "bbbb", 1111, 1111)
 recipe=Recipe("aaaa", "bbbb", 123, 'ccc', 'dddd')
+
+
+def email_uniqueness(email):
+    """Checks whether an email is already in use"""
+    UserList=[user for user in USERS_INDEX if email == user.email]
+    print(">>>  ", len(UserList))
+    if len(UserList) == 0:
+        return True
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            flash("login to view this page")
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 @app.route('/',)
 def index():
@@ -57,9 +78,11 @@ def login():
     return render_template('user_login.html', form=form)
 
 @app.route('/logout')
+@login_required
 def logout():
     if session["logged_in"]:
         session.pop("logged_in")
+        session.pop("login_id")
         flash('You have been succesfully logged out!', 'success')
         return redirect('/')
     flash("Already logged in")
@@ -69,7 +92,7 @@ def logout():
 class LoginForm(Form):
     """This class will read data from the login form"""
     email = StringField('ENTER EMAIL', [
-        validators.DataRequired(message='You need to input your email')])
+        validators.DataRequired(message='You need to input your email'), validators.email(message="invalid email")])
     password = PasswordField('ENTER PASSWORD', [
         validators.DataRequired(message='You need to input a password')])
 
@@ -79,7 +102,7 @@ class RegisterForm(Form):
     """
     name = StringField('NAME', [validators.length(max=20)])
     email = StringField("EMAIL", [validators.length(
-        max=20)])
+        max=20),validators.email(message="invalid email")])
     #email = StringField("EMAIL", [validators.length(
     #   max=20), validators.Regexp('/^\S+@\S+\.\S+$/')])
     password = PasswordField("PASSWORD", [
@@ -94,21 +117,22 @@ def register():
     form = RegisterForm(request.form)
     print(">>>  ", str(form.email.data))
     if request.method == 'POST' and form.validate():
-#        if email_uniquenes(str(form.email.data)):
+        if email_uniqueness(form.email.data):
 #Create an object user of the User class
             global user
             user = User(form.name.data, form.email.data, form.password.data, form.confirm.data)
 #Append the object user to the USERS_INDEX list
             global USERS_INDEX
             USERS_INDEX.append(user)
-            flash('please log in to continues')
+            flash('please log in to continue')
             return redirect('/login')
- #       flash("This email is already in use")
-#        return redirect('/')
-        #re-render the register form if the the post request is not succesful
+        flash("This email is already in use")
+        return redirect('/')
+#re-render the register form if the the post request is not succesful
     return render_template('register.html', form=form)
 
 @app.route('/user/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update_user(id):
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -164,6 +188,7 @@ def create_recipe():
     flash("you must be logged in to create a recipe")
     return redirect('/login')
 @app.route('/recipe/update/<int:recipe_id>', methods=['GET', 'POST'])
+@login_required
 def update_recipe(recipe_id):
     """This function collects data from the register form
     It then updates the user object using data obtained from the form
@@ -188,6 +213,7 @@ def update_recipe(recipe_id):
     return render_template('recipe.html', form=form)
 
 @app.route('/users')
+@login_required
 def  people():
     """This function iterates over the users_index list  and returns all users"""
     if len(USERS_INDEX) >= 1:
@@ -196,7 +222,7 @@ def  people():
     return "sorry No Users in Your App Yet"
 
 @app.route('/recipes/index')
-
+@login_required
 def all_recipes():
     """This function iterates over all_recipes list and return all the recipes"""
     if len(RECIPES_INDEX) >= 1:
@@ -215,6 +241,7 @@ def show_recipe():
 
 # add a route to delete a recipe
 @app.route('/recipe/delete/<int:recipe_id>')
+@login_required
 def delete(recipe_id):
     """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
     if len(RECIPES_INDEX) > 0:
@@ -228,6 +255,7 @@ def delete(recipe_id):
     return redirect('/')
 
 @app.route('/user/<int:id>/recipes')
+@login_required
 #This route returns all recipes belonging to a particular user in a list
 def user_recipes(id):
     """list all recipes whose user id is id"""
@@ -244,6 +272,7 @@ class CategoryForm(Form):
     value= StringField('CATEGORY', [validators.DataRequired()])
 
 @app.route('/add/category', methods=['GET', 'POST'])
+@login_required
 def add_category():
     """This extracts data from the category form and adds it to a list as a tuple """
     form = CategoryForm(request.form)
@@ -253,12 +282,14 @@ def add_category():
     return render_template('category_form.html', form=form)
 
 @app.route('/<category>/recipes')
+@login_required
 def category_recipes(category):
     """returns all recipes whose category is the same as the function parameters"""
     alist = [recipe for recipe in RECIPES_INDEX if recipe.category == category]
     return render_template('recipes_index.html', recipes=alist, user=user, CATEGORIES=CATEGORIES)
 
 @app.route('/<category>/delete')
+@login_required
 def delete_category(category):
     """deletes a category from the CATEGORIES LISTs"""
     for item in CATEGORIES:
@@ -275,8 +306,11 @@ def correct_user(recipe):
 
 
 
-def email_uniqueness(email):
-    """Checks whether an email is already in use"""
-    UserList=[user for user in USERS_INDEX if email == user.email]
-    print(">>>  ", len(UserList))
-    len(UserList) == 0
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            flash("login to view this page")
+            return redirect(url_for('app.login'))
+        return f(*args, **kwargs)
+    return decorated_function
