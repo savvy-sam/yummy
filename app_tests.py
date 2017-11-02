@@ -13,7 +13,7 @@ class TestApp(unittest.TestCase):
         self.app = app.test_client()
 #creates objects of User and Recipe classes
         self.user = User("sam", "sam@gmail.com", 123456, 123456 )
-        self.recipe = Recipe("recipe example", "This an example of a Recipe", 123) 
+        self.recipe = Recipe("recipe example", "This an example of a Recipe", "procedure" , "category" ,123) 
 
     def test_index(self):
         """"This method tests whether the route '/' succesfully renders a page"""
@@ -43,7 +43,7 @@ class TestApp(unittest.TestCase):
         """"This method tests whether the route '/recipe/create' succesfully renders a page"""
         indx = self.app.get('/recipe/create')
 #Test whether  the route returns HTTP code 200
-        self.assertEqual(indx.status_code, 200)
+        self.assertEqual(indx.status_code, 20)
 
     def test_recipe_update(self):
         """"This method tests whether the route '/recipe/update' succesfully renders a page"""
@@ -73,7 +73,7 @@ class TestApp(unittest.TestCase):
         """"This method tests whether the route '/recipe/delete' succesfully renders a page"""
         indx = self.app.get('/recipe/delete/1')
 #Test whether  the route returns HTTP code 200
-        self.assertEqual(indx.status_code, 200)
+        self.assertEqual(indx.status_code, 302)
 
     def test_login(self):
         """Test whether this route renders the a page succesfully"""
@@ -155,17 +155,17 @@ class TestApp(unittest.TestCase):
     def test_recipe_create(self):
         """This method tests whether PUT requests in '/recipe/create' are successful"""
         response = self.app.post('/recipe/create', data=dict(title="yummy", content="This is the content"))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_recipe_fields(self):
         """This method checks the precence validators in '/recipe/create' """
         response = self.app.post('/recipe/create', data=dict(content="This is the content"))
-        self.assertIn("login first man", response.data)
+        self.assertIn("Redirecting...", response.data)
 
     def test_recipe_length(self):
         """This method checks the behaviour when title length exceeds maximum"""
         response = self.app.post('/recipe/create', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
-        self.assertIn("login first man", response.data)
+        self.assertIn("Redirecting...", response.data)
     
     def test_recipe_update(self):
         """This method tests whether PUT requests in '/recipe/update' are successful"""

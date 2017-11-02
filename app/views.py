@@ -172,7 +172,7 @@ def update_recipe(recipe_id):
     if request.method == 'POST' and form.validate():
         for recipe in RECIPES_INDEX:
             if recipe.id == recipe_id:
-                if correct_user(recipe):
+                if recipe.user_id == session.get('login_id'):
                     login_id = session['login_id']
                     #recipe = Recipe(form.title.data, form.content.data, login_id)
                     recipe.title = form.title.data
@@ -219,14 +219,11 @@ def delete(recipe_id):
     """This function will delete a recipe by removing it from the RECIPES_INDEX list"""
     if len(RECIPES_INDEX) > 0:
         for recipe in RECIPES_INDEX:
-            if recipe.id == recipe_id:
-                if correct_user(recipe):
+                if recipe.user_id == session.get('login_id'):
                     RECIPES_INDEX.remove(recipe)
-                    return redirect('/recipes/index')
-                flash("Your are trying to delete a recipe that doesnt belong to you")
-                return redirect('/recipes/index')   
-            flash('that message does not exist')
-            return redirect('/recipes/index')
+                    return redirect('/recipes/index') 
+                flash("You are trying to delete another user's recipe") 
+                return redirect('/recipes/index')  
     flash("There are currently no rrecipes to delete")
     return redirect('/')
 
@@ -272,12 +269,13 @@ def delete_category(category):
 
 def correct_user(recipe):
     """Checks whether the signed in user is the owner of the recipe"""
-    login_id = session['login_id']
-    login_id == recipe.user_id
+    print(">>>  ", recipe.id)
+    recipe.user_id == session.get('login_id')
+    print(">>>  ", session.get('login_id'))
 
 
-def email_uniquenes(email):
 
+def email_uniqueness(email):
     """Checks whether an email is already in use"""
     UserList=[user for user in USERS_INDEX if email == user.email]
     print(">>>  ", len(UserList))
