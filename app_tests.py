@@ -221,3 +221,28 @@ class TestApp(unittest.TestCase):
         response = self.app.post('/recipe/update/1', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
         self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
     
+    def test_categories_add(self):
+        """Checks whether the category add is succesful"""
+        self.app.post('/register', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=123456))
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+        indx = self.app.get('/add/category')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+
+
+    def test_categories_delete(self):
+        CATEGORIES =[('cakes', 'CAKES')]
+        self.app.post('/register', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=123456))
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+        indx = self.app.get('/cakes/delete')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 302)
+
+    def test_categories_delete(self):
+        CATEGORIES =[('cakes', 'CAKES')]
+        self.app.post('/register', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=123456))
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+        indx = self.app.get('/cakes/recipes')
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(indx.status_code, 200)
+

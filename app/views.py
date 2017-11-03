@@ -40,6 +40,16 @@ def login_required(f):
     return decorated_function
 
 
+def set_id(anId, aList):
+    """This method iterates through a list of objects
+    if there is an object whose id matches the parmeter id,
+    THe object is assigned to a variable place holder"""
+    for item in aList:
+        if item.id == anId:
+            placeholder= item
+            return placeholder
+
+
 @app.route('/',)
 def index():
     """This function will return the index.html when the route is triggered"""
@@ -134,23 +144,22 @@ def register():
 @app.route('/user/update/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update_user(id):
-    form = RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
-        for user in USERS_INDEX:
-            if user.id == id:
-                if request.method == 'POST' and form.validate():
-                    user.name = form.title.data
-                    user.email = form.content.data
-                    user.password = form.password.data
-                    user.confirm =  form.confirm.data
-                    return redirect('/recipes/index')
-#re-render form if the POST request is not succesful
-                return "please submit a form"
-            return 'You are trying to edit a user that doesnt exist'
     """This function collects data from the register form
     It then updates the user object using data obtained from the form
     """
-    return render_template('register.html', form=form)
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        for user in USERS_INDEX:
+            print(">>>  ", str(user.id))
+            if user.id == id:
+                user.name = form.name.data
+                user.email = form.email.data
+                user.password = form.password.data
+                user.confirm =  form.confirm.data
+                return redirect('/recipes/index')
+#re-render form if the POST request is not succesful
+            return 'You are trying to edit a user that doesnt exist'
+    return render_template('register.html', form=form,)
 
 @app.route('/user/show')
 def show_user():
