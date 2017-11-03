@@ -27,6 +27,7 @@
       <li class="list"><a href="{{url_for('create_recipe')}}">MAKE RECIPE</a></li>
       <li class="list"><a href="{{url_for('all_recipes')}}">ALL RECIPES</a></li>
       <li class="list"><a href="{{url_for('user_recipes', id=session.get('login_id'))}}">MY RECIPES</a></li>
+      <li class="list"><a href="{{url_for('update_user', id=session.get('login_id'))}}">EDIT PROFILE</a></li>
       <li class="list"><a href="{{url_for('logout')}}">LOGOUT</a></li>
      {% endif %}
     </ul>
