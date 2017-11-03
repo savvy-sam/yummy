@@ -246,3 +246,10 @@ class TestApp(unittest.TestCase):
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
+    def test_categories_creation(self):
+        CATEGORIES =[('cakes', 'CAKES')]
+        self.app.post('/register', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=123456))
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+        response = self.app.post('/add/category', data=dict(label="map", value="map"))
+#Test whether  the route returns HTTP code 200
+        self.assertEqual(len(CATEGORIES), 1)

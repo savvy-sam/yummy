@@ -31,6 +31,7 @@ def email_uniqueness(email):
 
 
 def login_required(f):
+    """method implements login validation"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'logged_in' not in session:
@@ -90,6 +91,7 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    """method logs out a user by deleting logged_in from session"""
     if session["logged_in"]:
         session.pop("logged_in")
         session.pop("login_id")
