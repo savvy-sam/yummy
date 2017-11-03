@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+<div class='container'>
+<table class= "table table-responsive table-stripped">
+
+	<tr><h3><strong>TITLE</strong></h3></tr>
+	<tr><p>{{recipe.title}}</p></tr>
+	<tr><h3><strong>CATEGORY</strong></h3></tr>
+	<tr><p>{{ recipe.category }}</p></tr>
+	<tr><h3><strong>INGRIDIENTS</strong></h3></tr>
+	<tr><p>{{ recipe.ingridients }}</p></tr>
+	<tr><h3><strong>PROCEDURE</strong></h3></tr>
+	<tr><p>{{ recipe.procedure }}</p></tr>
+
+</table>
+</div>
+</div>
+
+{% endblock %}

@@ -1,10 +1,39 @@
-# yummy
+[![Build Status](https://travis-ci.org/savvy-sam/yummy.svg?branch=develop)](https://travis-ci.org/savvy-sam/yummy)
+[![Coverage Status](https://coveralls.io/repos/github/savvy-sam/yummy/badge.svg?branch=develop)](https://coveralls.io/github/savvy-sam/yummy?branch=develop)
+
+
 
 <strong>Introduction</strong>
 <p>
 Yummy is an app where users manage recipes. 
 It allows users to create,edit, view and delete recipes
 </p>
+<strong>Installation</strong>
+<p>
+To run the app on your local machine:
+</p>
+Clone this repository
+<p><code> git clone</code></p>
+
+
+
+<strong>Introduction</strong>
+<p>
+Yummy is an app where users manage recipes. 
+It allows users to create,edit, view and delete recipes
+</p>
+<strong>How It Works</strong>
+<p>Yummy has three main components:</p>
+<li>A user class</li>
+<li>A Recipe class</li>
+<li>A Categories list</li>
+
+!['home page'](/app/static/home.png?raw=true "Optional Title")
+![' recipe create page'](/app/static/recipe.png?raw=true "Optional Title")
+!['all recipes page'](/app/static/all.png?raw=true "Optional Title")
+
+<p>All recipes belong to a user and to a category</p>
+
 <strong>Installation</strong>
 <p>
 To run the app on your local machine:
@@ -57,6 +86,14 @@ Clone this repository
   
   10. DELETE yummy/recipes/destroy- Destroys an existing recipe
 
+  11. DELETE yummy/category/delete-Destroys an existing category
+
+  12. GET  yummy/category/recipes- Returns all recipes in a category
+
+  13. POST yummy/category/add- creates a new category
+
+  14. GET yummy/user/id/recipes - Returns all recipes belonging to a particular user
+
 <strong>Testing<strong>
     
     <p>The tests are are based on the python unittest library, you can run them using pytest</p> 
@@ -65,13 +102,22 @@ Clone this repository
  <strong>Uses</strong>
  
  <ol>
+    <li> Python 2.7.3 </li>  
     <li>Flask</li>
     <li>HTML</li>
-    <li>Bootstrap</li>
+    <li>Bootstrap for front end</li>
+    <li>Pylint for code linting</li>
+    <li>Pytest for running tests</li>
+    <li>Heroku for deployment</li>
+    <li>Git for version control </li>
+    <li>Coveralls for testing</li>
+    <li>TravisCI for build integration</li>
+    <li>Jinja</li>
+    <li>request</li>
+
  
  </ol>
  <strong>Author</strong>
  
  Samson Chege- Andela Fellowship Applicant
-
 

@@ -1,0 +1,39 @@
+{% block header %}
+<div class="bartop">
+<head>
+		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+		<link rel="stylesheet" type ="text/css" href= "{{ url_for('static',filename='registration.css') }}">
+</head>
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         <li class= "text-success">{{ message }}</li>
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">YUMMY YUMMY</a>
+    </div>
+    <ul class="bar">
+      <li class="list"><a href="{{url_for('index')}}">Home</a></li>
+      {% if not session.get('logged_in')%}
+      <li class="list"><a href="{{url_for('login')}}">LOG IN</a></li>
+      <li class="list"><a href="{{url_for('register')}}">SIGN UP</a></li>
+      {% else %}
+      <li class="list"><a href="{{url_for('create_recipe')}}">MAKE RECIPE</a></li>
+      <li class="list"><a href="{{url_for('all_recipes')}}">ALL RECIPES</a></li>
+      <li class="list"><a href="{{url_for('user_recipes', id=session.get('login_id'))}}">MY RECIPES</a></li>
+      <li class="list"><a href="{{url_for('update_user', id=session.get('login_id'))}}">EDIT PROFILE</a></li>
+      <li class="list"><a href="{{url_for('logout')}}">LOGOUT</a></li>
+     {% endif %}
+    </ul>
+  </div>
+</nav>
+</div>
+{% endblock %}
+{% block content %}
+{% endblock %}

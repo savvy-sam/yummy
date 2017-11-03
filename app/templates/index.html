@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="body">
+
+
+	<section class="parts" height= 500px>
+		<div class="container">
+			<h1><strong>We Heard That You Love Food!!!!!!</strong></h1>
+
+			<img src='{{url_for('static',filename='food.jpg')}}' class="img-responsive img-circle" width="300" height="100" padding-top='50px' padding-bottom = 50px >
+
+
+			<p>You are not alone</p>
+			
+		</div>
+	</section>
+
+
+
+	<section class="parts" height= 500px>
+		<div class="container">
+
+			<p>
+				Millions of foodlovers like your are already posting their recipes  on Yummy Yummy
+			</p>
+			<p>
+				You can join them by:
+
+			</p>
+
+			<p>
+
+				 <button class= "btn btn-large "><a href="{{url_for('register')}}"><strong>CREATE AN ACCOUNT</strong></a></button>
+			
+			</p>
+			<p>
+				If you already have a YummyYummy Account
+			</p>
+
+			<p>
+				 <button class= "btn btn-large "><a href="{{url_for('login')}}"><strong>LOGIN</strong></a></button>
+			</p>
+		</div>
+	</section>
+
+	<section class="parts" height= 500px >
+		<div class= "container">
+
+		<p>
+			In case you dont Want to join us now,
+		</p>
+
+		<p>
+			You can read Recipes created by members by clicking on
+		</p>
+
+		<p>
+			<button class= "btn btn-large "><a href="{{url_for('all_recipes')}}"><strong>ALL RECIPES</strong></a></button>
+		</p>
+
+		<div>
+	</section>
+
+</div>
+{% endblock %}

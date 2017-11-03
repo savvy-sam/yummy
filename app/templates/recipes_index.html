@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+	<div class="col-lg-4">
+
+     {% for menu in CATEGORIES %}
+
+     <li>
+	 <a href="{{url_for('category_recipes', category= menu[0])}}">
+		{{ menu[1] }}
+	 </a>
+    </li>
+     {% endfor %}
+                
+    </div>
+		
+</div>
+	<div class="col-lg-8">
+<body class= "container table-c">
+
+<div class="container">
+
+	<h4 class="text-center text-info"> ALL RECIPES </h4>
+	<div class="container">
+
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<td><strong>TITLE</strong></td>
+				<td><strong>CATEGORY</strong></td>
+				<td><strong>RECIPE ID</strong></td>
+				<td><strong>USER NAME</strong></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</thead>
+			<tbody>
+			{% for dish in recipes %}
+			<tr>
+				<td>{{ dish.title }}</td>
+				<td>{{ dish.category}}</td>
+				<td>{{ dish.id }}</td>
+				<td>{{ dish.user_id }}</td>
+				<td><a href="{{url_for('show_recipe', id= dish.id)}}">Show</a></td>
+				<td><a href="{{url_for('update_recipe', recipe_id=dish.id)}}">Edit</a></td>
+				<td><a href="{{url_for('delete', recipe_id=dish.id)}}">Delete</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+</div>
+</body>
+</div>
+</div>
+{% endblock %}

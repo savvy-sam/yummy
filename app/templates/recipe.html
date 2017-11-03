@@ -1,0 +1,50 @@
+
+{% extends "base.html"%}
+{% block content %}
+<div id ="body">
+<p class="text-danger">
+	CAN'T SEE YOUR CATEGORY ?
+	<button><a href="{{url_for('add_category')}}">Create A Category</a></button>
+</p>
+
+<h2 class='text-center'>CREATE YOUR RECIPE</h2>
+
+<div class="container">
+{% from "includes/_form_helpers.html" import render_field %}
+
+<form method='POST' action ="">
+
+	<div class='form-group'>
+
+		{{render_field(form.title, class="form-control field")}}
+		
+	</div>
+
+	<div class='form-group'>
+
+		{{render_field(form.ingridients, class="form-control field")}}
+		
+	</div>
+
+	<div class='form-group'>
+
+		{{render_field(form.procedure, class="form-control field")}}
+		
+	</div>
+
+	<div class='form-group'>
+
+		{{render_field(form.category, class="form-control field")}}
+		
+	</div>
+
+
+	<input type = "Submit" class= "btn btn-primary"  value="Submit" >
+
+
+	</form>
+
+</div>
+
+</div>
+{% endblock %}

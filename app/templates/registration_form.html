@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+
+	<div class="container">
+	<h2 class="text text-center header">WELCOME TO YUMMY RECIPIES</h2>
+	<br>
+<form>
+	<div class="form-group">
+		<label class="header">ENTER YOUR NAME</label>
+		<input type="text" class="form-control" id="field">
+	</div>
+
+	<div class="form-group">
+		<label class="header">ENTER YOUR EMAIL</label>
+		<input type="email" class="form-control" id="field">
+	</div>
+
+	<div class="form-group">
+		<label class="header"><strong>ENTER YOU PASSWORD</strong></label>
+		<input type="password" class="form-control" id="field">
+	</div>
+	<div class="form-group">
+		<label class="header"><strong>CONFIRM YOUR PASSWORD:</strong></label>
+		<input type="password" class="form-control" id="field">
+	</div>
+
+	<div class="form-group">
+		<label class="header"><strong>AREA OF SPECIALISATION</strong></label>
+		<select class="form-control" id="field">
+			<option>Cakes</option>
+			<option>Fruit and Juices</option>
+			<option>Tradatonal Dishes</option>
+			<option>Western Dishes</option>
+			
+		</select>
+
+	</div>
+	<button type="submit" class="btn btn-info" id="submit">Submit</button>
+
+</form>
+</div>
+</body>
+</html>
+{% endblock %}
