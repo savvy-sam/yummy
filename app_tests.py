@@ -1,6 +1,7 @@
 """This model defines various methods of testing this flask app"""
 import unittest
 from app import app
+from flask import session
 from app.model import User, Recipe
 
 
@@ -29,12 +30,16 @@ class TestApp(unittest.TestCase):
 
     def test_user_update(self):
         """"This method tests whether the route '/user/update' succesfully renders a page"""
+        login = self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+
         indx = self.app.get('/user/update/1')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
     def test_user_category_creation(self):
         """"This method tests whether the route '/add/category' succesfully renders a page"""
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+
         indx = self.app.get('add/category')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
@@ -66,12 +71,15 @@ class TestApp(unittest.TestCase):
 
     def test_recipe_update(self):
         """"This method tests whether the route '/recipe/update' succesfully renders a page"""
+        login = self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         indx = self.app.get('/recipe/update/1')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
 
     def test_users_index(self):
         """"This method tests whether the route '/users' succesfully renders a page"""
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+
         indx = self.app.get('/users')
 #Test whether  the route returns HTTP code 200
         self.assertEqual(indx.status_code, 200)
@@ -151,30 +159,36 @@ class TestApp(unittest.TestCase):
     
     def test_length_validation(self):
         """This method checks the behaviour when the name field  is longer than 20"""
-        response = self.app.post('/register', data=dict(name="samsonnnnnnnnnnnnnnnnnnnnn", email="samson@gmail.com", password=123456, confirm=123456), follow_redirects=False)
+        response = self.app.post('/register', data=dict(name="samsonnnnnnnnnnnnnnnnnnnnn", email="samson@gmail.com", password=123456, confirm=123456), follow_redirects=True)
         self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
 
     def test_match_update(self):
         """This method checks whether form validator for password and confirm work
         It checks the behaviour password and confirm do not match
         """
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         response = self.app.post('/user/update/1', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=1223456), follow_redirects=False)
         self.assertIn("<li>Your passwords do not match</li>", response.data)
         
     def test_presence_update(self):
         """This method checks the behaviour when one field is missing in /user/update route"""
+        self.app.post('/register', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=123456))
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         response = self.app.post('/user/update/1', data=dict(name="samson", email="samson@gmail.com", confirm=1223456), follow_redirects=False)
         self.assertIn("<li>This field is required.</li>", response.data)
     
     def test_length_update(self):
         """This method checks the behaviour when the name field  is longer than 20 in user/update route"""
+        self.app.post('/register', data=dict(name="samson", email="samson@gmail.com", password=123456, confirm=123456))
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         response = self.app.post('/user/update/1', data=dict(name="samsonnnnnnnnnnnnnnnnnnnnn", email="samson@gmail.com", password=123456, confirm=123456), follow_redirects=False)
         self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
     
     def test_recipe_create(self):
         """This method tests whether PUT requests in '/recipe/create' are successful"""
+        login = self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         response = self.app.post('/recipe/create', data=dict(title="yummy", content="This is the content"))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_recipe_fields(self):
         """This method checks the precence validators in '/recipe/create' """
@@ -183,21 +197,27 @@ class TestApp(unittest.TestCase):
 
     def test_recipe_length(self):
         """This method checks the behaviour when title length exceeds maximum"""
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         response = self.app.post('/recipe/create', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
-        self.assertIn("Redirecting...", response.data)
+        self.assertIn('<li>Field cannot be longer than 20 characters.</li>', response.data)
     
     def test_recipe_update(self):
         """This method tests whether PUT requests in '/recipe/update' are successful"""
+        login = self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
         response = self.app.post('/recipe/update/1', data=dict(title="yummy", content="This is the content"))
         self.assertEqual(response.status_code, 200)
 
     def test_title_field(self):
         """This method checks the precence validators in '/recipe/update' """
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+
         response = self.app.post('/recipe/update/1', data=dict(content="This is the content"))
         self.assertIn("<li>This field is required.</li>", response.data)
 
     def test_title_length(self):
         """This method checks the behaviour when title length exceeds maximum"""
+        self.app.post('/login', data=dict(email="samson@gmail.com", password="123456"))
+
         response = self.app.post('/recipe/update/1', data=dict(title="yummyyummyyummmyyummyy", content="This is the content"))
         self.assertIn("<li>Field cannot be longer than 20 characters.</li>", response.data)
     
